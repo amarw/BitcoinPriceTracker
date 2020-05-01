@@ -1,17 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Color, Font } from '../theme';
 
-export default () => (
-  <View style={styles.header}>
-    <Text style={[styles.headerTitle, { flex: 2 }]}>Wallet</Text>
-    <Text style={[styles.headerText, { flex: 1 }]}>$ 49.96</Text>
-    <Text style={[styles.headerText, { flex: 1 }]}>+1.96</Text>
-    <TouchableOpacity style={{ flex: 0.5 }} onPress={() => {}}>
-      <Text style={[styles.headerText, { fontSize: Font.size.header }]}>+</Text>
-    </TouchableOpacity>
-  </View>
-);
+export default ({ currentPrice, quantity, purchasePrice }) => {
+  const valueAtBuy = quantity * purchasePrice;
+  const currentValue = quantity * currentPrice;
+  const difference = currentValue - valueAtBuy;
+  const color = difference > 0 ? Color.green : Color.darkRed;
+  return (
+    <View style={styles.header}>
+      <Text style={[styles.headerTitle, { flex: 2 }]}>Wallet</Text>
+      {!Number.isNaN(valueAtBuy) && (
+        <Text style={[styles.headerText, { flex: 1 }]}>
+          $ {valueAtBuy.toFixed(2)}
+        </Text>
+      )}
+      {!Number.isNaN(difference) && (
+        <Text style={[styles.headerText, { flex: 1, color }]}>
+          {difference.toFixed(2)}
+        </Text>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -31,8 +42,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Color.white,
-    fontSize: Font.size.header,
-    fontWeight: Font.weight.thin,
+    fontSize: Font.size.regular,
+    fontWeight: Font.weight.bold,
     textAlign: 'center',
   },
 });
