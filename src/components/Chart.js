@@ -28,7 +28,6 @@ export default ({ data }) => {
       <VictoryChart
         style={{ backgroundColor: Color.navyBlue }}
         theme={VictoryTheme.material}
-        domainPadding={{ x: 25 }}
         scale={{ x: 'time' }}>
         <VictoryBar
           data={memoizedData}
@@ -47,6 +46,7 @@ export default ({ data }) => {
             grid: { stroke: 'none' },
             ticks: { stroke: 'none' },
           }}
+          fixLabelOverlap
           tickFormat={(t) => {
             const date = new Date(t);
             return `${date.getDay()}/${date.getMonth()}`;
