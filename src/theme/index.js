@@ -5,6 +5,7 @@ export const Color = {
   white: '#ffffff',
   green: '#549645',
   borderBlue: '#2d4257',
+  darkRed: '#801414',
 };
 
 export const Font = {

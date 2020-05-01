@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
+import allKeys from 'lodash/keys';
 import config from '../config';
 import { Color, Font } from '../theme';
 import HeaderView from './HeaderView';
 import Chart from './Chart';
+import PriceDifferenceLabel from './PriceDifferenceLabel';
 
 const data = [
   { quarter: 1, earnings: 13000 },
@@ -49,22 +51,19 @@ const useGetPriceHistory = () => {
 export default () => {
   const [currentPrice, setCurrentPrice] = useGetCurrentPrice();
   const [priceHistory, setPriceHistory] = useGetPriceHistory();
-
+  const allDates = allKeys(priceHistory);
+  const yesterdayPrice = priceHistory[allDates[allDates.length - 1]];
   return (
     <View style={styles.container}>
       <HeaderView />
       <View style={styles.horizontalView}>
         <Text style={[styles.currencyLabel, { flex: 2 }]}>BTC</Text>
-        <Text
-          style={[styles.price, { flex: 2 }]}>{`$ ${currentPrice.rate}`}</Text>
-        <View
-          style={{
-            backgroundColor: Color.green,
-            flex: 1,
-            width: 60,
-            height: 40,
-            marginLeft: 10,
-          }}
+        <Text style={[styles.price, { flex: 2 }]}>
+          {`$ ${currentPrice.rate_float.toFixed(2)}`}
+        </Text>
+        <PriceDifferenceLabel
+          oldPrice={yesterdayPrice}
+          newPrice={currentPrice.rate_float}
         />
       </View>
       <View style={styles.chart}>
