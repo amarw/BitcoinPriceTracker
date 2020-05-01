@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     fontSize: Font.size.regular,
     fontWeight: Font.weight.thin,
     marginVertical: 10,
-    height: 30,
+    height: 40,
     borderBottomColor: Color.navyBlue,
     borderBottomWidth: 1,
   },
